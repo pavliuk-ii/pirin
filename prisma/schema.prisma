@@ -34,10 +34,10 @@ model Post {
   text String
 
   userId Int
-  user User @relation("UserPosts", fields: [userId], references: [id])
+  user User @relation("UserPosts", fields: [userId], references: [id], onDelete: Cascade)
 
   replyToId Int?
-  replyTo Post? @relation("PostReplies", fields: [replyToId], references: [id])
+  replyTo Post? @relation("PostReplies", fields: [replyToId], references: [id], onDelete: Cascade)
   replies Post[] @relation("PostReplies")
 
   likes Like[] @relation("PostLikes")
@@ -51,9 +51,9 @@ model Like {
   updatedAt DateTime @updatedAt
 
   userId Int
-  user User @relation("UserLikes", fields: [userId], references: [id])
+  user User @relation("UserLikes", fields: [userId], references: [id], onDelete: Cascade)
   postId Int
-  post Post @relation("PostLikes", fields: [postId], references: [id])
+  post Post @relation("PostLikes", fields: [postId], references: [id], onDelete: Cascade)
   @@unique(name: "likesUserPostUnique", fields: [userId, postId])
 
   @@map("likes")
